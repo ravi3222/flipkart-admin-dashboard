@@ -2,6 +2,6 @@
 
 ## Screenshots
 
-![dashboard](docs\images\flipkart-dashboard.png)
+![dashboard](docs/images/flipkart-dashboard.png)
 
-![dashboard-small](docs\images\flipkart-dashboard-small.png)
+![dashboard-small](docs/images/flipkart-dashboard-small.png)
