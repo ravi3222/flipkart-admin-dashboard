@@ -32,6 +32,12 @@ const authReducer = (state = initialState, action) => {
       };
       break;
 
+    case authConstants.LOGOUT_REQUEST:
+      state = {
+        ...initialState,
+      };
+      break;
+
     default:
       return state;
   }

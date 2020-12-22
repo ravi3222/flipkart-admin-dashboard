@@ -1,11 +1,23 @@
 import React from "react";
-import { Jumbotron } from "react-bootstrap";
+import { Col, Container, Jumbotron, Row } from "react-bootstrap";
 import Layout from "../../components/Layout";
+import "./styles.css";
 
 function Home() {
   return (
     <Layout>
-      <Jumbotron
+      <Container fluid>
+        <Row>
+          <Col md={2} className="sidebar">
+            Sidebar
+          </Col>
+          <Col md={10} style={{ marginLeft: "auto" }}>
+            Container
+          </Col>
+        </Row>
+      </Container>
+
+      {/* <Jumbotron
         style={{ margin: "5rem", background: "#fff" }}
         className="text-center"
       >
@@ -21,7 +33,7 @@ function Home() {
           infancy. Various versions have evolved over the years, sometimes by
           accident, sometimes on purpose (injected humour and the like).
         </p>
-      </Jumbotron>
+      </Jumbotron> */}
     </Layout>
   );
 }
