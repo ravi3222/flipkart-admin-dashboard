@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import PrivateRoute from "./components/HOC/PrivateRoute";
 import Home from "./containers/Home";
+import Orders from "./containers/Orders";
+import Products from "./containers/Products";
 import Signin from "./containers/Signin";
 import Signup from "./containers/Signup";
 import { isUserLoggedIn } from "./redux/actions";
@@ -22,6 +24,9 @@ function App() {
     <div className="App">
       <Switch>
         <PrivateRoute path="/" exact component={Home} />
+        <PrivateRoute path="/products" component={Products} />
+        <PrivateRoute path="/orders" component={Orders} />
+
         <Route exact path="/" component={Home}></Route>
         <Route path="/signin" component={Signin}></Route>
         <Route path="/signup" component={Signup}></Route>
