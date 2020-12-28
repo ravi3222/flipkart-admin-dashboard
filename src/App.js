@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import PrivateRoute from "./components/HOC/PrivateRoute";
+import Category from "./containers/Category";
 import Home from "./containers/Home";
 import Orders from "./containers/Orders";
 import Products from "./containers/Products";
@@ -26,6 +27,7 @@ function App() {
         <PrivateRoute path="/" exact component={Home} />
         <PrivateRoute path="/products" component={Products} />
         <PrivateRoute path="/orders" component={Orders} />
+        <PrivateRoute path="/category" component={Category} />
 
         <Route exact path="/" component={Home}></Route>
         <Route path="/signin" component={Signin}></Route>
