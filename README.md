@@ -2,6 +2,4 @@
 
 ## Screenshots
 
-![dashboard](docs/images/flipkart-dashboard.png)
-
-![dashboard-small](docs/images/flipkart-dashboard-small.png)
+![category-dashboard](docs/images/category-dashboard.png)
