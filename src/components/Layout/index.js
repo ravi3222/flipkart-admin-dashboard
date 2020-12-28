@@ -32,7 +32,7 @@ function Layout({ children, sidebar }) {
           </Row>
         </Container>
       ) : (
-        { children }
+        children
       )}
     </>
   );
