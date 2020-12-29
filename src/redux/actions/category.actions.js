@@ -21,3 +21,23 @@ export const getAllCategory = () => {
     }
   };
 };
+
+export const addCategory = (form) => {
+  return async (dispatch) => {
+    dispatch({ type: categoryConstants.ADD_NEW_CATEGORY_REQUEST });
+    const res = await axios.post(`category/create`, form);
+
+    if (res.status === 201) {
+      console.log("ADDED NEW CATEGORY", res);
+      dispatch({
+        type: categoryConstants.ADD_NEW_CATEGORY_SUCCESS,
+        payload: res.data.category,
+      });
+    } else {
+      dispatch({
+        type: categoryConstants.ADD_NEW_CATEGORY_FAILURE,
+        payload: res.data.error,
+      });
+    }
+  };
+};

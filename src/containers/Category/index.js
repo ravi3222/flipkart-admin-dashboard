@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout";
-import { getAllCategory } from "../../redux/actions";
+import { addCategory, getAllCategory } from "../../redux/actions";
 import Input from "../../components/Input";
 
 function Category() {
@@ -18,6 +18,20 @@ function Category() {
   }, []);
 
   const handleClose = () => {
+    const form = new FormData();
+
+    form.append("name", categoryName);
+    form.append("parentId", parentCategoryId);
+    form.append("categoryImage", categoryImage);
+    dispatch(addCategory(form));
+
+    // const cat = {
+    //   categoryName,
+    //   parentCategoryId,
+    //   categoryImage,
+    // };
+
+    console.log("form", form);
     setShow(false);
   };
 
