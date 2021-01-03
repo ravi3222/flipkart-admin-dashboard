@@ -9,7 +9,7 @@ import Orders from "./containers/Orders";
 import Products from "./containers/Products";
 import Signin from "./containers/Signin";
 import Signup from "./containers/Signup";
-import { getAllCategory, isUserLoggedIn } from "./redux/actions";
+import { getInitialData, isUserLoggedIn } from "./redux/actions";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,7 +19,8 @@ function App() {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());
     }
-    dispatch(getAllCategory());
+
+    dispatch(getInitialData());
   }, []);
 
   return (

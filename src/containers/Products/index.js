@@ -15,6 +15,7 @@ function Products() {
   const [productPictures, setProductPictures] = useState([]);
   const [show, setShow] = useState(false);
   const category = useSelector((state) => state.category);
+  const product = useSelector((state) => state.product);
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -65,14 +66,18 @@ function Products() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-          </tr>
+          {product.products.length > 0
+            ? product.products.map((product, idx) => (
+                <tr key={product._id}>
+                  <td>{idx}</td>
+                  <td>{product.name}</td>
+                  <td>{product.price}</td>
+                  <td>{product.quantity}</td>
+                  <td>{product.description}</td>
+                  <td>--</td>
+                </tr>
+              ))
+            : null}
         </tbody>
       </Table>
     );
