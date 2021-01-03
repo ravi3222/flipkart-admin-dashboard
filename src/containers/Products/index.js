@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Modal, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import Layout from "../../components/Layout";
 import Input from "../../components/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../redux/actions/product.actions";
+import ModalUI from "../../components/ModalUI";
 
 function Products() {
   const [name, setName] = useState("");
@@ -65,66 +66,56 @@ function Products() {
         </Row>
       </Container>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add new Products</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            label="Name"
-            value={name}
-            placeholder={`Product Name`}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <Input
-            label="Quantity"
-            value={quantity}
-            placeholder={`Quantity`}
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-          <Input
-            label="Price"
-            value={price}
-            placeholder={`Price`}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <Input
-            label="Description"
-            value={description}
-            placeholder={`Description`}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <select
-            className="form-control"
-            value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)}
-          >
-            <option>Select Category</option>
-            {createCategoryList(category.categories).map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.name}
-              </option>
-            ))}
-          </select>
+      <ModalUI
+        show={show}
+        handleClose={handleClose}
+        modalTitle={`Add New Product`}
+      >
+        <Input
+          label="Name"
+          value={name}
+          placeholder={`Product Name`}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <Input
+          label="Quantity"
+          value={quantity}
+          placeholder={`Quantity`}
+          onChange={(e) => setQuantity(e.target.value)}
+        />
+        <Input
+          label="Price"
+          value={price}
+          placeholder={`Price`}
+          onChange={(e) => setPrice(e.target.value)}
+        />
+        <Input
+          label="Description"
+          value={description}
+          placeholder={`Description`}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <select
+          className="form-control"
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.value)}
+        >
+          <option>Select Category</option>
+          {createCategoryList(category.categories).map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.name}
+            </option>
+          ))}
+        </select>
 
-          {productPictures.length > 0
-            ? productPictures.map((pic, index) => (
-                <div key={index}>{pic.name}</div>
-              ))
-            : null}
+        {productPictures.length > 0
+          ? productPictures.map((pic, index) => (
+              <div key={index}>{pic.name}</div>
+            ))
+          : null}
 
-          <input
-            type="file"
-            name="productImage"
-            onChange={handleProductImage}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <input type="file" name="productImage" onChange={handleProductImage} />
+      </ModalUI>
     </Layout>
   );
 }
