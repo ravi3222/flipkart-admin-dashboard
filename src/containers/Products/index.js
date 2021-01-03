@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import Layout from "../../components/Layout";
 import Input from "../../components/Input";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct } from "../../redux/actions/product.actions";
 
 function Products() {
   const [name, setName] = useState("");
@@ -11,10 +12,25 @@ function Products() {
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [productPictures, setProductPictures] = useState([]);
-  const [show, setShow] = useState("");
+  const [show, setShow] = useState(false);
   const category = useSelector((state) => state.category);
+  const dispatch = useDispatch();
 
   const handleClose = () => {
+    const form = new FormData();
+    form.append("name", name);
+    form.append("quantity", quantity);
+    form.append("price", price);
+    form.append("description", description);
+    form.append("category", categoryId);
+
+    for (let pic of productPictures) {
+      form.append("productImage", pic);
+    }
+
+    dispatch(addProduct(form));
+    setProductPictures([]);
+
     setShow(false);
   };
 
@@ -62,25 +78,25 @@ function Products() {
           />
           <Input
             label="Quantity"
-            value={name}
+            value={quantity}
             placeholder={`Quantity`}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setQuantity(e.target.value)}
           />
           <Input
             label="Price"
-            value={name}
+            value={price}
             placeholder={`Price`}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setPrice(e.target.value)}
           />
           <Input
             label="Description"
-            value={name}
+            value={description}
             placeholder={`Description`}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
           />
           <select
             className="form-control"
-            value={category}
+            value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
           >
             <option>Select Category</option>
