@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../redux/actions/";
 import ModalUI from "../../components/ModalUI";
 import "./styles.css";
+import { generatePublicUrl } from "../../urlConfig";
 
 function Products() {
   const [name, setName] = useState("");
@@ -194,10 +195,7 @@ function Products() {
             <div style={{ display: "flex" }}>
               {productDetails.productPictures.map((picture, index) => (
                 <div className="productImageContainer" key={index}>
-                  <img
-                    src={`http://localhost:5000/public/${picture.img}`}
-                    alt=""
-                  />
+                  <img src={generatePublicUrl(picture.img)} alt="" />
                 </div>
               ))}
             </div>
