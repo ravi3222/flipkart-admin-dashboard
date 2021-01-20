@@ -109,7 +109,23 @@ function Category() {
         );
         category && expandedArray.push(category);
       });
+    setCheckedArray(checkedArray);
+    setExpandedArray(expandedArray);
     console.log(checked, expanded, categories, checkedArray, expandedArray);
+  };
+
+  const handleCategoryInput = (key, value, index, type) => {
+    if (type === "checked") {
+      const updatedCheckedArray = checkedArray.map((item, _index) =>
+        index === _index ? { ...item, [key]: value } : item
+      );
+      setCheckedArray(updatedCheckedArray);
+    } else if ((type = "expanded")) {
+      const updatedExpandedArray = expandedArray.map((item, _index) =>
+        index === _index ? { ...item, [key]: value } : item
+      );
+      setExpandedArray(updatedExpandedArray);
+    }
   };
 
   return (
@@ -195,8 +211,109 @@ function Category() {
             <h6>Expanded</h6>
           </Col>
         </Row>
+        {expandedArray.length > 0 &&
+          expandedArray.map((item, index) => {
+            return (
+              <Row key={index}>
+                <Col>
+                  <Input
+                    value={item.name}
+                    placeholder={`Category Name`}
+                    onChange={(e) =>
+                      handleCategoryInput(
+                        "name",
+                        e.target.value,
+                        index,
+                        "expanded"
+                      )
+                    }
+                  />
+                </Col>
+                <Col>
+                  <select
+                    className="form-control"
+                    value={item.parentId}
+                    onChange={(e) =>
+                      handleCategoryInput(
+                        "parentId",
+                        e.target.value,
+                        index,
+                        "expanded"
+                      )
+                    }
+                  >
+                    <option>Select category</option>
+                    {createCategoryList(category.categories).map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.name}
+                      </option>
+                    ))}
+                  </select>
+                </Col>
+                <Col>
+                  <select className="form-control">
+                    <option value="">Select Type</option>
+                    <option value="store">Store</option>
+                    <option value="product">Product</option>
+                    <option value="page">Page</option>
+                  </select>
+                </Col>
+              </Row>
+            );
+          })}
 
-        <Row>
+        {checkedArray.length > 0 &&
+          checkedArray.map((item, index) => {
+            return (
+              <Row key={index}>
+                <Col>
+                  <Input
+                    value={item.name}
+                    placeholder={`Category Name`}
+                    onChange={(e) =>
+                      handleCategoryInput(
+                        "name",
+                        e.target.value,
+                        index,
+                        "checked"
+                      )
+                    }
+                  />
+                </Col>
+                <Col>
+                  <select
+                    className="form-control"
+                    value={item.parentId}
+                    onChange={(e) =>
+                      handleCategoryInput(
+                        "parentId",
+                        e.target.value,
+                        index,
+                        "checked"
+                      )
+                    }
+                  >
+                    <option>Select category</option>
+                    {createCategoryList(category.categories).map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.name}
+                      </option>
+                    ))}
+                  </select>
+                </Col>
+                <Col>
+                  <select className="form-control">
+                    <option value="">Select Type</option>
+                    <option value="store">Store</option>
+                    <option value="product">Product</option>
+                    <option value="page">Page</option>
+                  </select>
+                </Col>
+              </Row>
+            );
+          })}
+
+        {/* <Row>
           <Col>
             <Input
               value={categoryName}
@@ -226,38 +343,7 @@ function Category() {
               <option value="page">Page</option>
             </select>
           </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Input
-              value={categoryName}
-              placeholder={`Category Name`}
-              onChange={(e) => setCategoryName(e.target.value)}
-            />
-          </Col>
-          <Col>
-            <select
-              className="form-control"
-              value={parentCategoryId}
-              onChange={(e) => setParentCategoryId(e.target.value)}
-            >
-              <option>Select category</option>
-              {createCategoryList(category.categories).map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.name}
-                </option>
-              ))}
-            </select>
-          </Col>
-          <Col>
-            <select className="form-control">
-              <option value="">Select Type</option>
-              <option value="store">Store</option>
-              <option value="product">Product</option>
-              <option value="page">Page</option>
-            </select>
-          </Col>
-        </Row>
+        </Row> */}
 
         <input
           type="file"
