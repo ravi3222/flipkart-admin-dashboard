@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 function Input({ label, type, placeholder, error, value, onChange }) {
   return (
     <Form.Group>
-      <Form.Label>{label}</Form.Label>
+      {label && <Form.Label>{label}</Form.Label>}
       <Form.Control
         type={type}
         placeholder={placeholder}

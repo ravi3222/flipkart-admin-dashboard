@@ -5,6 +5,14 @@ import Layout from "../../components/Layout";
 import { addCategory, getAllCategory } from "../../redux/actions";
 import Input from "../../components/Input";
 import ModalUI from "../../components/ModalUI";
+import CheckboxTree from "react-checkbox-tree";
+import {
+  IoIosCheckboxOutline,
+  IoIosCheckbox,
+  IoIosArrowForward,
+  IoIosArrowDown,
+} from "react-icons/io";
+import "react-checkbox-tree/lib/react-checkbox-tree.css";
 
 function Category() {
   const category = useSelector((state) => state.category);
@@ -12,6 +20,8 @@ function Category() {
   const [parentCategoryId, setParentCategoryId] = useState("");
   const [categoryImage, setCategoryImage] = useState("");
   const [show, setShow] = useState(false);
+  const [checked, setChecked] = useState([]);
+  const [expanded, setExpanded] = useState([]);
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -41,12 +51,18 @@ function Category() {
 
     for (let category of categories) {
       mycategories.push(
-        <li key={category.name}>
-          {category.name}
-          {category.children.length > 0 ? (
-            <ul>{renderCategories(category.children)}</ul>
-          ) : null}
-        </li>
+        {
+          label: category.name,
+          value: category._id,
+          children:
+            category.children.length > 0 && renderCategories(category.children),
+        }
+        // <li key={category.name}>
+        //   {category.name}
+        //   {category.children.length > 0 ? (
+        //     <ul>{renderCategories(category.children)}</ul>
+        //   ) : null}
+        // </li>
       );
     }
 
@@ -55,7 +71,11 @@ function Category() {
 
   const createCategoryList = (categories, options = []) => {
     for (let category of categories) {
-      options.push({ value: category._id, name: category.name });
+      options.push({
+        value: category._id,
+        name: category.name,
+        parentId: category.parentId,
+      });
       if (category.children.length > 0) {
         createCategoryList(category.children, options);
       }
@@ -80,10 +100,24 @@ function Category() {
         </Row>
         <Row>
           <Col md={12}>
-            <ul>
-              {renderCategories(category.categories)}
-              {/* {JSON.stringify(createCategoryList(category.categories))} */}
-            </ul>
+            {/* <ul> */}
+            {/* {renderCategories(category.categories)} */}
+            {/* {JSON.stringify(createCategoryList(category.categories))} */}
+            {/* </ul> */}
+            <CheckboxTree
+              nodes={renderCategories(category.categories)}
+              checked={checked}
+              expanded={expanded}
+              onCheck={(checked) => setChecked(checked)}
+              onExpand={(expanded) => setExpanded(expanded)}
+              icons={{
+                check: <IoIosCheckbox />,
+                uncheck: <IoIosCheckboxOutline />,
+                halfCheck: <IoIosCheckboxOutline />,
+                expandClose: <IoIosArrowForward />,
+                expandOpen: <IoIosArrowDown />,
+              }}
+            />
           </Col>
         </Row>
       </Container>
