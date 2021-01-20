@@ -22,6 +22,9 @@ function Category() {
   const [show, setShow] = useState(false);
   const [checked, setChecked] = useState([]);
   const [expanded, setExpanded] = useState([]);
+  const [checkedArray, setCheckedArray] = useState([]);
+  const [expandedArray, setExpandedArray] = useState([]);
+  const [updateCategoryModal, setUpdateCategoryModal] = useState(false);
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -87,6 +90,28 @@ function Category() {
     setCategoryImage(e.target.files[0]);
   };
 
+  const updateCategory = () => {
+    setUpdateCategoryModal(true);
+    const categories = createCategoryList(category.categories);
+    const checkedArray = [];
+    const expandedArray = [];
+    checked.length > 0 &&
+      checked.forEach((categoryId, index) => {
+        const category = categories.find(
+          (category, _index) => categoryId == category.value
+        );
+        category && checkedArray.push(category);
+      });
+    expanded.length > 0 &&
+      expanded.forEach((categoryId, index) => {
+        const category = categories.find(
+          (category, _index) => categoryId == category.value
+        );
+        category && expandedArray.push(category);
+      });
+    console.log(checked, expanded, categories, checkedArray, expandedArray);
+  };
+
   return (
     <Layout sidebar>
       <Container>
@@ -120,6 +145,12 @@ function Category() {
             />
           </Col>
         </Row>
+        <Row>
+          <Col>
+            <button>Delete</button>
+            <button onClick={updateCategory}>Edit</button>
+          </Col>
+        </Row>
       </Container>
 
       <ModalUI
@@ -145,6 +176,88 @@ function Category() {
             </option>
           ))}
         </select>
+
+        <input
+          type="file"
+          name="categoryImage"
+          onChange={handleCategoryImage}
+        />
+      </ModalUI>
+      {/* Edit Categories */}
+      <ModalUI
+        show={updateCategoryModal}
+        handleClose={() => setUpdateCategoryModal(false)}
+        modalTitle={`Update Category`}
+        size="lg"
+      >
+        <Row>
+          <Col>
+            <h6>Expanded</h6>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+            <Input
+              value={categoryName}
+              placeholder={`Category Name`}
+              onChange={(e) => setCategoryName(e.target.value)}
+            />
+          </Col>
+          <Col>
+            <select
+              className="form-control"
+              value={parentCategoryId}
+              onChange={(e) => setParentCategoryId(e.target.value)}
+            >
+              <option>Select category</option>
+              {createCategoryList(category.categories).map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.name}
+                </option>
+              ))}
+            </select>
+          </Col>
+          <Col>
+            <select className="form-control">
+              <option value="">Select Type</option>
+              <option value="store">Store</option>
+              <option value="product">Product</option>
+              <option value="page">Page</option>
+            </select>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Input
+              value={categoryName}
+              placeholder={`Category Name`}
+              onChange={(e) => setCategoryName(e.target.value)}
+            />
+          </Col>
+          <Col>
+            <select
+              className="form-control"
+              value={parentCategoryId}
+              onChange={(e) => setParentCategoryId(e.target.value)}
+            >
+              <option>Select category</option>
+              {createCategoryList(category.categories).map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.name}
+                </option>
+              ))}
+            </select>
+          </Col>
+          <Col>
+            <select className="form-control">
+              <option value="">Select Type</option>
+              <option value="store">Store</option>
+              <option value="product">Product</option>
+              <option value="page">Page</option>
+            </select>
+          </Col>
+        </Row>
 
         <input
           type="file"
