@@ -128,78 +128,8 @@ function Category() {
     }
   };
 
-  return (
-    <Layout sidebar>
-      <Container>
-        <Row>
-          <Col md={12}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h3>Category</h3>
-              <button onClick={handleShow}>Add</button>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            {/* <ul> */}
-            {/* {renderCategories(category.categories)} */}
-            {/* {JSON.stringify(createCategoryList(category.categories))} */}
-            {/* </ul> */}
-            <CheckboxTree
-              nodes={renderCategories(category.categories)}
-              checked={checked}
-              expanded={expanded}
-              onCheck={(checked) => setChecked(checked)}
-              onExpand={(expanded) => setExpanded(expanded)}
-              icons={{
-                check: <IoIosCheckbox />,
-                uncheck: <IoIosCheckboxOutline />,
-                halfCheck: <IoIosCheckboxOutline />,
-                expandClose: <IoIosArrowForward />,
-                expandOpen: <IoIosArrowDown />,
-              }}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <button>Delete</button>
-            <button onClick={updateCategory}>Edit</button>
-          </Col>
-        </Row>
-      </Container>
-
-      <ModalUI
-        show={show}
-        handleClose={handleClose}
-        modalTitle={`Add New Category`}
-      >
-        <Input
-          value={categoryName}
-          placeholder={`Category Name`}
-          onChange={(e) => setCategoryName(e.target.value)}
-        />
-
-        <select
-          className="form-control"
-          value={parentCategoryId}
-          onChange={(e) => setParentCategoryId(e.target.value)}
-        >
-          <option>Select category</option>
-          {createCategoryList(category.categories).map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.name}
-            </option>
-          ))}
-        </select>
-
-        <input
-          type="file"
-          name="categoryImage"
-          onChange={handleCategoryImage}
-        />
-      </ModalUI>
-      {/* Edit Categories */}
+  const renderUpdateCategoryModal = () => {
+    return (
       <ModalUI
         show={updateCategoryModal}
         handleClose={() => setUpdateCategoryModal(false)}
@@ -313,37 +243,40 @@ function Category() {
             );
           })}
 
-        {/* <Row>
-          <Col>
-            <Input
-              value={categoryName}
-              placeholder={`Category Name`}
-              onChange={(e) => setCategoryName(e.target.value)}
-            />
-          </Col>
-          <Col>
-            <select
-              className="form-control"
-              value={parentCategoryId}
-              onChange={(e) => setParentCategoryId(e.target.value)}
-            >
-              <option>Select category</option>
-              {createCategoryList(category.categories).map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.name}
-                </option>
-              ))}
-            </select>
-          </Col>
-          <Col>
-            <select className="form-control">
-              <option value="">Select Type</option>
-              <option value="store">Store</option>
-              <option value="product">Product</option>
-              <option value="page">Page</option>
-            </select>
-          </Col>
-        </Row> */}
+        <input
+          type="file"
+          name="categoryImage"
+          onChange={handleCategoryImage}
+        />
+      </ModalUI>
+    );
+  };
+
+  const renderAddCategoryModal = () => {
+    return (
+      <ModalUI
+        show={show}
+        handleClose={handleClose}
+        modalTitle={`Add New Category`}
+      >
+        <Input
+          value={categoryName}
+          placeholder={`Category Name`}
+          onChange={(e) => setCategoryName(e.target.value)}
+        />
+
+        <select
+          className="form-control"
+          value={parentCategoryId}
+          onChange={(e) => setParentCategoryId(e.target.value)}
+        >
+          <option>Select category</option>
+          {createCategoryList(category.categories).map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.name}
+            </option>
+          ))}
+        </select>
 
         <input
           type="file"
@@ -351,6 +284,50 @@ function Category() {
           onChange={handleCategoryImage}
         />
       </ModalUI>
+    );
+  };
+  return (
+    <Layout sidebar>
+      <Container>
+        <Row>
+          <Col md={12}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h3>Category</h3>
+              <button onClick={handleShow}>Add</button>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
+            {/* <ul> */}
+            {/* {renderCategories(category.categories)} */}
+            {/* {JSON.stringify(createCategoryList(category.categories))} */}
+            {/* </ul> */}
+            <CheckboxTree
+              nodes={renderCategories(category.categories)}
+              checked={checked}
+              expanded={expanded}
+              onCheck={(checked) => setChecked(checked)}
+              onExpand={(expanded) => setExpanded(expanded)}
+              icons={{
+                check: <IoIosCheckbox />,
+                uncheck: <IoIosCheckboxOutline />,
+                halfCheck: <IoIosCheckboxOutline />,
+                expandClose: <IoIosArrowForward />,
+                expandOpen: <IoIosArrowDown />,
+              }}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <button>Delete</button>
+            <button onClick={updateCategory}>Edit</button>
+          </Col>
+        </Row>
+      </Container>
+      {renderAddCategoryModal()}
+      {renderUpdateCategoryModal()}
     </Layout>
   );
 }
