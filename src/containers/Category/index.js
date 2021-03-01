@@ -6,6 +6,7 @@ import {
   addCategory,
   getAllCategory,
   updateCategories,
+  deleteCategories as deleteCategoriesAction,
 } from "../../redux/actions";
 import Input from "../../components/Input";
 import ModalUI from "../../components/ModalUI";
@@ -302,13 +303,30 @@ function Category() {
     setDeleteCategoryModal(true);
   };
 
+  const deleteCategories = () => {
+    const checkedIdsArray = checkedArray.map((item, index) => ({
+      _id: item.value,
+    }));
+    const expandedIdsArray = expandedArray.map((item, index) => ({
+      _id: item.value,
+    }));
+    const idsArray = expandedIdsArray.concat(checkedIdsArray);
+    console.log(idsArray);
+    dispatch(deleteCategoriesAction(idsArray)).then((result) => {
+      if (result) {
+        dispatch(getAllCategory());
+        setDeleteCategoryModal(false);
+      }
+    });
+  };
+
   const renderDeleteCategoryModal = () => {
     console.log("delete", checkedArray);
     return (
       <ModalUI
         modalTitle="Confirm"
         show={deleteCategoryModal}
-        handleClose={() => setDeleteCategoryModal(false)}
+        handleClose={deleteCategories}
         buttons={[
           {
             label: "No",
@@ -320,9 +338,7 @@ function Category() {
           {
             label: "Yes",
             color: "danger",
-            onClick: () => {
-              alert("yes");
-            },
+            onClick: deleteCategories,
           },
         ]}
       >
