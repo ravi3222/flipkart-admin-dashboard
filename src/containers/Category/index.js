@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout";
-import { addCategory, getAllCategory } from "../../redux/actions";
+import {
+  addCategory,
+  getAllCategory,
+  updateCategories,
+} from "../../redux/actions";
 import Input from "../../components/Input";
 import ModalUI from "../../components/ModalUI";
 import CheckboxTree from "react-checkbox-tree";
@@ -128,11 +132,36 @@ function Category() {
     }
   };
 
+  const updateCategoriesForm = () => {
+    const form = new FormData();
+
+    expandedArray.forEach((item, index) => {
+      form.append("_id", item.value);
+      form.append("name", item.name);
+      form.append("parentId", item.parentId ? item.parentId : "");
+      form.append("type", item.type);
+    });
+
+    checkedArray.forEach((item, index) => {
+      form.append("_id", item.value);
+      form.append("name", item.name);
+      form.append("parentId", item.parentId ? item.parentId : "");
+      form.append("type", item.type);
+    });
+    dispatch(updateCategories(form)).then((result) => {
+      if (result) {
+        dispatch(getAllCategory());
+      }
+    });
+
+    setUpdateCategoryModal(false);
+  };
+
   const renderUpdateCategoryModal = () => {
     return (
       <ModalUI
         show={updateCategoryModal}
-        handleClose={() => setUpdateCategoryModal(false)}
+        handleClose={updateCategoriesForm}
         modalTitle={`Update Category`}
         size="lg"
       >
@@ -192,6 +221,11 @@ function Category() {
             );
           })}
 
+        <Row>
+          <Col>
+            <h6>Checked</h6>
+          </Col>
+        </Row>
         {checkedArray.length > 0 &&
           checkedArray.map((item, index) => {
             return (
