@@ -29,6 +29,7 @@ function Category() {
   const [checkedArray, setCheckedArray] = useState([]);
   const [expandedArray, setExpandedArray] = useState([]);
   const [updateCategoryModal, setUpdateCategoryModal] = useState(false);
+  const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -95,7 +96,11 @@ function Category() {
   };
 
   const updateCategory = () => {
+    updateCheckedAndExpandedCategories();
     setUpdateCategoryModal(true);
+  };
+
+  const updateCheckedAndExpandedCategories = () => {
     const categories = createCategoryList(category.categories);
     const checkedArray = [];
     const expandedArray = [];
@@ -115,7 +120,13 @@ function Category() {
       });
     setCheckedArray(checkedArray);
     setExpandedArray(expandedArray);
-    console.log(checked, expanded, categories, checkedArray, expandedArray);
+    console.log([
+      { checked: checked },
+      { expanded: expanded },
+      { categories: categories },
+      { checkedArray: checkedArray },
+      { expandedArray: expandedArray },
+    ]);
   };
 
   const handleCategoryInput = (key, value, index, type) => {
@@ -286,6 +297,51 @@ function Category() {
     );
   };
 
+  const deleteCategory = () => {
+    updateCheckedAndExpandedCategories();
+    setDeleteCategoryModal(true);
+  };
+
+  const renderDeleteCategoryModal = () => {
+    console.log("delete", checkedArray);
+    return (
+      <ModalUI
+        modalTitle="Confirm"
+        show={deleteCategoryModal}
+        handleClose={() => setDeleteCategoryModal(false)}
+        buttons={[
+          {
+            label: "No",
+            color: "primary",
+            onClick: () => {
+              alert("no");
+            },
+          },
+          {
+            label: "Yes",
+            color: "danger",
+            onClick: () => {
+              alert("yes");
+            },
+          },
+        ]}
+      >
+        <h5>Expanded</h5>
+        {expandedArray.map((item, index) => (
+          <li>
+            <span key={index}>{item.name}</span>
+          </li>
+        ))}
+        <h5>Checked</h5>
+        {checkedArray.map((item, index) => (
+          <li>
+            <span key={index}>{item.name}</span>
+          </li>
+        ))}
+      </ModalUI>
+    );
+  };
+
   const renderAddCategoryModal = () => {
     return (
       <ModalUI
@@ -355,13 +411,14 @@ function Category() {
         </Row>
         <Row>
           <Col>
-            <button>Delete</button>
+            <button onClick={deleteCategory}>Delete</button>
             <button onClick={updateCategory}>Edit</button>
           </Col>
         </Row>
       </Container>
       {renderAddCategoryModal()}
       {renderUpdateCategoryModal()}
+      {renderDeleteCategoryModal()}
     </Layout>
   );
 }
