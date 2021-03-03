@@ -1,17 +1,18 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
-function Input({ label, type, placeholder, error, value, onChange }) {
+function Input(props) {
   return (
     <Form.Group>
-      {label && <Form.Label>{label}</Form.Label>}
+      {props.label && <Form.Label>{props.label}</Form.Label>}
       <Form.Control
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
+        type={props.type}
+        placeholder={props.placeholder}
+        value={props.value}
+        onChange={props.onChange}
+        {...props}
       />
-      <Form.Text className="text-muted">{error} </Form.Text>
+      <Form.Text className="text-muted">{props.error} </Form.Text>
     </Form.Group>
   );
 }

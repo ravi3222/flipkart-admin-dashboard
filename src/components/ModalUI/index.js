@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 
 function ModalUI(props) {
   return (
-    <Modal size={props.size} show={props.show} onHide={props.handleClose}>
+    <Modal size={props.size} show={props.show}>
       <Modal.Header closeButton>
         <Modal.Title>{props.modalTitle}</Modal.Title>
       </Modal.Header>
@@ -16,7 +16,12 @@ function ModalUI(props) {
             </Button>
           ))
         ) : (
-          <Button variant="primary" onClick={props.handleClose}>
+          <Button
+            variant="primary"
+            {...props}
+            className="btn-sm"
+            onClick={props.handleClose}
+          >
             Save Changes
           </Button>
         )}
