@@ -167,11 +167,7 @@ function Category() {
       form.append("parentId", item.parentId ? item.parentId : "");
       form.append("type", item.type);
     });
-    dispatch(updateCategories(form)).then((result) => {
-      if (result) {
-        dispatch(getAllCategory());
-      }
-    });
+    dispatch(updateCategories(form));
 
     setUpdateCategoryModal(false);
   };
@@ -199,6 +195,7 @@ function Category() {
         }
       });
     }
+    setDeleteCategoryModal(false);
   };
 
   const renderDeleteCategoryModal = () => {
@@ -292,6 +289,7 @@ function Category() {
 
       <AddCategoryModal
         show={show}
+        // handleClose={() => setShow(false)}
         handleClose={handleClose}
         modalTitle={`Add New Category`}
         categoryName={categoryName}
