@@ -312,12 +312,15 @@ function Category() {
     }));
     const idsArray = expandedIdsArray.concat(checkedIdsArray);
     console.log(idsArray);
-    dispatch(deleteCategoriesAction(idsArray)).then((result) => {
-      if (result) {
-        dispatch(getAllCategory());
-        setDeleteCategoryModal(false);
-      }
-    });
+
+    if (checkedIdsArray.length > 0) {
+      dispatch(deleteCategoriesAction(checkedIdsArray)).then((result) => {
+        if (result) {
+          dispatch(getAllCategory());
+          setDeleteCategoryModal(false);
+        }
+      });
+    }
   };
 
   const renderDeleteCategoryModal = () => {

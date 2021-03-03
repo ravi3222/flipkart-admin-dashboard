@@ -6,15 +6,17 @@ export const login = (user) => {
 
   return async (dispatch) => {
     dispatch({ type: authConstants.LOGIN_REQUEST });
-    const res = await axios.post(`/admin/signin`, {
-      ...user,
-    });
-    // .then((response) => {
-    //   console.log("Login Successful", response.data);
-    // })
-    // .catch((error) => {
-    //   console.log("Oops, Request failed!");
-    // });
+    const res = await axios
+      .post(`/admin/signin`, {
+        ...user,
+      })
+      // .then((response) => {
+      //   console.log("Login Successful", response.data);
+      // })
+      .catch((error) => {
+        alert("Oops, Request failed!");
+        // console.log("Oops, Request failed!");
+      });
 
     if (res.status === 200) {
       const { token, user } = res.data;
