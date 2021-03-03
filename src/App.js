@@ -5,6 +5,7 @@ import "./App.css";
 import PrivateRoute from "./components/HOC/PrivateRoute";
 import Category from "./containers/Category";
 import Home from "./containers/Home";
+import NewPage from "./containers/NewPage";
 import Orders from "./containers/Orders";
 import Products from "./containers/Products";
 import Signin from "./containers/Signin";
@@ -27,6 +28,7 @@ function App() {
     <div className="App">
       <Switch>
         <PrivateRoute path="/" exact component={Home} />
+        <PrivateRoute path="/page" component={NewPage} />
         <PrivateRoute path="/products" component={Products} />
         <PrivateRoute path="/orders" component={Orders} />
         <PrivateRoute path="/category" component={Category} />

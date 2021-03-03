@@ -17,6 +17,9 @@ function Layout({ children, sidebar }) {
                   <NavLink to={"/"}>Home</NavLink>
                 </li>
                 <li>
+                  <NavLink to={"/page"}>Page</NavLink>
+                </li>
+                <li>
                   <NavLink to={"/category"}>Category</NavLink>
                 </li>
                 <li>
