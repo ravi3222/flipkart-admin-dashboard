@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/Input";
 import Layout from "../../components/Layout";
 import ModalUI from "../../components/ModalUI";
 import linearCategories from "../../helpers/linearCategories";
+import { createPage } from "../../redux/actions";
 
 function NewPage() {
   const [createModal, setCreateModal] = useState(false);
@@ -16,6 +17,7 @@ function NewPage() {
   const [type, setType] = useState("");
   const [banners, setBanners] = useState([]);
   const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setCategories(linearCategories(category.categories));
@@ -49,7 +51,7 @@ function NewPage() {
     const form = new FormData();
     form.append("title", title);
     form.append("description", desc);
-    form.append("category", category);
+    form.append("category", categoryId);
     form.append("type", type);
     banners.forEach((banner, index) => {
       form.append("banners", banner);
@@ -57,6 +59,8 @@ function NewPage() {
     products.forEach((product, index) => {
       form.append("products", product);
     });
+
+    dispatch(createPage(form));
 
     console.log({ title, desc, category, type, banners, products });
   };
@@ -107,7 +111,7 @@ function NewPage() {
           </Row>
           {banners.length > 0
             ? banners.map((banner, index) => (
-                <Row>
+                <Row key={index}>
                   <Col>{banner.name}</Col>
                 </Row>
               ))
@@ -119,7 +123,7 @@ function NewPage() {
           </Row>
           {products.length > 0
             ? products.map((product, index) => (
-                <Row>
+                <Row key={index}>
                   <Col>{product.name}</Col>
                 </Row>
               ))
