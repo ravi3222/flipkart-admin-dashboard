@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout";
@@ -37,10 +37,17 @@ function Category() {
   const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (!category.loading) {
+      setShow(false);
+    }
+  }, [category.loading]);
+
   const handleClose = () => {
     const form = new FormData();
     if (categoryName === "") {
       alert("Name is required");
+      return;
     }
 
     form.append("name", categoryName);
@@ -116,14 +123,14 @@ function Category() {
     checked.length > 0 &&
       checked.forEach((categoryId, index) => {
         const category = categories.find(
-          (category, _index) => categoryId == category.value
+          (category, _index) => categoryId === category.value
         );
         category && checkedArray.push(category);
       });
     expanded.length > 0 &&
       expanded.forEach((categoryId, index) => {
         const category = categories.find(
-          (category, _index) => categoryId == category.value
+          (category, _index) => categoryId === category.value
         );
         category && expandedArray.push(category);
       });
@@ -170,7 +177,7 @@ function Category() {
     });
     dispatch(updateCategories(form));
 
-    setUpdateCategoryModal(false);
+    // setUpdateCategoryModal(false);
   };
 
   const deleteCategory = () => {
@@ -290,8 +297,8 @@ function Category() {
 
       <AddCategoryModal
         show={show}
-        // handleClose={() => setShow(false)}
-        handleClose={handleClose}
+        handleClose={() => setShow(false)}
+        onSubmit={handleClose}
         modalTitle={`Add New Category`}
         categoryName={categoryName}
         setCategoryName={setCategoryName}
@@ -303,7 +310,8 @@ function Category() {
 
       <UpdateCategoriesModal
         show={updateCategoryModal}
-        handleClose={updateCategoriesForm}
+        handleClose={() => setUpdateCategoryModal(false)}
+        onSubmit={updateCategoriesForm}
         modalTitle={`Update Category`}
         size="lg"
         expandedArray={expandedArray}
