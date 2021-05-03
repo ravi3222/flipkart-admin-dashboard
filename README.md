@@ -1,6 +1,6 @@
 <h1> Flipkart Admin Dashboard </h1>
 
-This is the Admin Dashboard for ecommerce website. It's being developed using `React, Redux, Redux Thunk, Bootstrap, react-checkbox-tree, axios` etc.
+This is the Admin Dashboard for ecommerce website. It's being developed using **`React, Redux, Redux Thunk, Bootstrap, react-checkbox-tree, axios`** etc.
 
 ### Let's take a look at frontend and backend here at:
 
